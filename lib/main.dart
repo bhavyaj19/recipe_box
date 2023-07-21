@@ -1,8 +1,15 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:recipe_box/screens/login.dart';
+import 'package:recipe_box/firebase_options.dart';
+// import 'package:recipe_box/screens/login.dart';
 import 'package:recipe_box/screens/temp_login.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
+// PENDING FROM https://firebase.google.com/codelabs/firebase-auth-in-flutter-apps#3
   runApp(const MyApp());
 }
 

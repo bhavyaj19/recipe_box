@@ -33,6 +33,7 @@ dependencies:
   firebase_core: ^2.15.0
   flutter:
     sdk: flutter
+  flutterfire_ui: ^0.4.3+20
 
 dev_dependencies:
   flutter_lints: ^2.0.0
