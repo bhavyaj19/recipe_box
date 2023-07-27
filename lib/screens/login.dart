@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:recipe_box/widgets/text_input_field.dart';
 
-class Login extends StatefulWidget {
-  const Login({super.key});
+class TempLogin extends StatefulWidget {
+  const TempLogin({super.key});
 
   @override
-  State<Login> createState() => _LoginState();
+  State<TempLogin> createState() => _TempLoginState();
 }
 
-class _LoginState extends State<Login> {
+class _TempLoginState extends State<TempLogin> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   @override

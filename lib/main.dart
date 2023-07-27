@@ -2,7 +2,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:recipe_box/firebase_options.dart';
 // import 'package:recipe_box/screens/login.dart';
-import 'package:recipe_box/screens/temp_login.dart';
+import 'package:recipe_box/screens/login.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -23,7 +23,7 @@ class MyApp extends StatelessWidget {
       title: "RecipeBox",
       theme: ThemeData.dark(useMaterial3: true),
       home: const Scaffold(
-        body: TempLogin(),
+        body: MyApp(),
       ),
     );
   }
