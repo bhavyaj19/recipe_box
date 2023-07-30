@@ -1,8 +1,12 @@
 # recipe_box
 
-A new Flutter project.
+This app is about storing and sharing recipes on an open social media platform.
 
-## Getting Started
+## Dependencies
+- firebase_auth
+- cloud_firestore
+- firebase_core
+- firebase_storage
 
 This project is a starting point for a Flutter application.
 
