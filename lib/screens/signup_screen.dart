@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:recipe_box/resources/auth_method.dart';
+import 'package:recipe_box/screens/home.dart';
+import 'package:recipe_box/utils/utils.dart';
 import 'package:recipe_box/widgets/text_feild_input.dart';
 
 class SignupScreen extends StatefulWidget {
@@ -12,6 +15,7 @@ class _SignupScreenState extends State<SignupScreen> {
   final TextEditingController _usernameController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passController = TextEditingController();
+  bool _isLoading = false;
 
   @override
   void dispose() {
@@ -19,6 +23,29 @@ class _SignupScreenState extends State<SignupScreen> {
     super.dispose();
     _emailController.dispose();
     _passController.dispose();
+  }
+
+  void signUpUser() async {
+    setState(() {
+      _isLoading = true;
+    });
+    String res = await AuthMethod().signUpUser(
+      email: _emailController.text,
+      password: _passController.text,
+      username: _usernameController.text,
+    );
+    setState(() {
+      _isLoading = true;
+    });
+
+    print(res);
+    if (res != "success") {
+      // ignore: use_build_context_synchronously
+      showSnackBar(res, context);
+    } else {
+      Navigator.of(context).pushReplacement(
+          MaterialPageRoute(builder: (context) => HomeScreen()));
+    }
   }
 
   @override
@@ -55,17 +82,17 @@ class _SignupScreenState extends State<SignupScreen> {
             // Login Button
             // InkWell(
             //   onTap: loginUser,
-            //   child: 
-              Container(
+            //   child:
+            InkWell(
+              onTap: signUpUser,
+              child: Container(
                 // ignore: sort_child_properties_last
-                child: 
-                // _isLoading
-                //     ? const Center(
-                //         child: CircularProgressIndicator(
-                //         color: primaryColor,
-                //       ))
-                //     :
-                     const Text("Log In"),
+                child: _isLoading
+                    ? const Center(
+                        child: CircularProgressIndicator(
+                        color: Color.fromARGB(255, 228, 228, 228),
+                      ))
+                    : const Text("Sign Up"),
                 width: double.infinity,
                 alignment: Alignment.center,
                 padding: const EdgeInsets.symmetric(vertical: 12),
@@ -75,6 +102,7 @@ class _SignupScreenState extends State<SignupScreen> {
                     ),
                     color: Colors.blue),
               ),
+            ),
             // )
             const SizedBox(height: 12),
             Flexible(child: Container(), flex: 2),
@@ -83,16 +111,16 @@ class _SignupScreenState extends State<SignupScreen> {
               children: [
                 Container(
                   padding: const EdgeInsets.symmetric(vertical: 8),
-                  child: const Text('account nahi hai?!'),
+                  child: const Text('account hai?!'),
                 ),
                 const SizedBox(width: 10),
                 GestureDetector(
-                  // onTap: navigateToSignup,
-                  onTap: (){},
+                  // onTap: navigateToLogin,
+                  onTap: () {},
                   child: Container(
                     padding: const EdgeInsets.symmetric(vertical: 8),
                     child: const Text(
-                      'Sign Up',
+                      'Login',
                       style: TextStyle(fontWeight: FontWeight.bold),
                     ),
                   ),

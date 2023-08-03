@@ -1,8 +1,23 @@
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:recipe_box/screens/login_screen.dart';
+import 'package:recipe_box/screens/home.dart';
 import 'package:recipe_box/screens/signup_screen.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  if (kIsWeb) {
+    await Firebase.initializeApp(
+        options: const FirebaseOptions(
+      apiKey: "AIzaSyDfrQJmcShwZsAO7yGjRR9lvu6cPyPnpqc",
+      appId: "1:638163581320:android:fea8162b3e228cc828e23d",
+      messagingSenderId: "638163581320",
+      projectId: "recipebox-c1053",
+    ));
+  } else {
+    await Firebase.initializeApp();
+  }
   runApp(const MyApp());
 }
 
@@ -13,10 +28,31 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      theme: ThemeData(useMaterial3: true),
-      home: Scaffold(
-        body: SignupScreen(),
-      ),
-    );
+      theme: ThemeData.dark(useMaterial3: true),
+      home: StreamBuilder(
+        stream: FirebaseAuth.instance.authStateChanges(),
+        builder: (context, snapshot){
+          
+          if (snapshot.connectionState == ConnectionState.active) {
+            if (snapshot.hasData) {
+              return const HomeScreen();
+            }
+          } else {
+            if (snapshot.hasError) {
+              return Center(
+                child: Text('${snapshot.error}'),
+              );
+            }
+          }
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return const Center(
+              child: CircularProgressIndicator(
+                color: Color.fromARGB(255, 231, 231, 231),
+              ),
+            );
+          }
+          return const SignupScreen();
+        })
+      );
   }
 }
