@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:recipe_box/resources/auth_method.dart';
 import 'package:recipe_box/screens/home.dart';
+import 'package:recipe_box/screens/login_screen.dart';
 import 'package:recipe_box/utils/utils.dart';
 import 'package:recipe_box/widgets/text_feild_input.dart';
 
@@ -23,13 +24,14 @@ class _SignupScreenState extends State<SignupScreen> {
     super.dispose();
     _emailController.dispose();
     _passController.dispose();
+    _usernameController.dispose();
   }
 
-  void signUpUser() async {
+  void signupUser() async {
     setState(() {
       _isLoading = true;
     });
-    String res = await AuthMethod().signUpUser(
+    String res = await AuthMethod().signupUser(
       email: _emailController.text,
       password: _passController.text,
       username: _usernameController.text,
@@ -46,6 +48,11 @@ class _SignupScreenState extends State<SignupScreen> {
       Navigator.of(context).pushReplacement(
           MaterialPageRoute(builder: (context) => HomeScreen()));
     }
+  }
+
+  void navigateToLogin() {
+    Navigator.of(context).pushReplacement(
+        MaterialPageRoute(builder: (context) => const LoginScreen()));
   }
 
   @override
@@ -80,11 +87,8 @@ class _SignupScreenState extends State<SignupScreen> {
             ),
             const SizedBox(height: 24),
             // Login Button
-            // InkWell(
-            //   onTap: loginUser,
-            //   child:
             InkWell(
-              onTap: signUpUser,
+              onTap: signupUser,
               child: Container(
                 // ignore: sort_child_properties_last
                 child: _isLoading
@@ -103,24 +107,25 @@ class _SignupScreenState extends State<SignupScreen> {
                     color: Colors.blue),
               ),
             ),
-            // )
             const SizedBox(height: 12),
-            Flexible(child: Container(), flex: 2),
+            Flexible(
+              flex: 2,
+              child: Container(),
+            ),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Container(
                   padding: const EdgeInsets.symmetric(vertical: 8),
-                  child: const Text('account hai?!'),
+                  child: const Text("already have an account?"),
                 ),
                 const SizedBox(width: 10),
                 GestureDetector(
-                  // onTap: navigateToLogin,
-                  onTap: () {},
+                  onTap: navigateToLogin,
                   child: Container(
                     padding: const EdgeInsets.symmetric(vertical: 8),
                     child: const Text(
-                      'Login',
+                      'Sign Up',
                       style: TextStyle(fontWeight: FontWeight.bold),
                     ),
                   ),

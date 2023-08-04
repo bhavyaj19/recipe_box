@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:recipe_box/resources/auth_method.dart';
+import 'package:recipe_box/screens/home.dart';
+import 'package:recipe_box/screens/signup_screen.dart';
+import 'package:recipe_box/utils/utils.dart';
 import 'package:recipe_box/widgets/text_feild_input.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -9,9 +13,9 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  final TextEditingController _usernameController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passController = TextEditingController();
+  bool _isLoading = false;
 
   @override
   void dispose() {
@@ -21,23 +25,41 @@ class _LoginScreenState extends State<LoginScreen> {
     _passController.dispose();
   }
 
+  void loginUser() async {
+    setState(() {
+      _isLoading = true;
+    });
+    String res = await AuthMethod().loginUser(
+      email: _emailController.text,
+      password: _passController.text,
+    );
+    print(res);
+    if (res != "success") {
+      // ignore: use_build_context_synchronously
+      showSnackBar(res, context);
+    } else {
+      // ignore: use_build_context_synchronously
+      Navigator.of(context)
+          .push(MaterialPageRoute(builder: (context) => const HomeScreen()));
+    }
+  }
+
+  void navigateToSignup() {
+    Navigator.of(context)
+        .push(MaterialPageRoute(builder: (context) => const SignupScreen()));
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
           child: Container(
-        padding: EdgeInsets.symmetric(horizontal: 32),
+        padding: const EdgeInsets.symmetric(horizontal: 32),
         width: double.infinity,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             const SizedBox(height: 64),
-            // usrname
-            TextFeildInput(
-                textEditingController: _usernameController,
-                hintText: 'Enter your username',
-                textInputType: TextInputType.text),
-            const SizedBox(height: 24),
             // E-mail
             TextFeildInput(
                 textEditingController: _emailController,
@@ -53,19 +75,16 @@ class _LoginScreenState extends State<LoginScreen> {
             ),
             const SizedBox(height: 24),
             // Login Button
-            // InkWell(
-            //   onTap: loginUser,
-            //   child: 
-              Container(
+            InkWell(
+              onTap: loginUser,
+              child: Container(
                 // ignore: sort_child_properties_last
-                child: 
-                // _isLoading
-                //     ? const Center(
-                //         child: CircularProgressIndicator(
-                //         color: primaryColor,
-                //       ))
-                //     :
-                     const Text("Log In"),
+                child: _isLoading
+                    ? const Center(
+                        child: CircularProgressIndicator(
+                        color: Color.fromARGB(255, 228, 228, 228),
+                      ))
+                    : const Text("Log In"),
                 width: double.infinity,
                 alignment: Alignment.center,
                 padding: const EdgeInsets.symmetric(vertical: 12),
@@ -75,20 +94,22 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                     color: Colors.blue),
               ),
-            // )
+            ),
             const SizedBox(height: 12),
-            Flexible(child: Container(), flex: 2),
+            Flexible(
+              flex: 2,
+              child: Container(),
+            ),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Container(
                   padding: const EdgeInsets.symmetric(vertical: 8),
-                  child: const Text('account nahi hai?!'),
+                  child: const Text("don't have an account?"),
                 ),
                 const SizedBox(width: 10),
                 GestureDetector(
-                  // onTap: navigateToSignup,
-                  onTap: (){},
+                  onTap: navigateToSignup,
                   child: Container(
                     padding: const EdgeInsets.symmetric(vertical: 8),
                     child: const Text(
