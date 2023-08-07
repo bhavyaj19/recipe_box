@@ -3,7 +3,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:recipe_box/screens/home.dart';
-import 'package:recipe_box/screens/signup_screen.dart';
+import 'package:recipe_box/screens/login_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -51,7 +51,7 @@ class MyApp extends StatelessWidget {
               ),
             );
           }
-          return const SignupScreen();
+          return const LoginScreen();
         })
       );
   }

@@ -7,6 +7,14 @@ class AuthMethod {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
+  Future<bool> checkUsernameAvailability(String username) async {
+    QuerySnapshot result = await FirebaseFirestore.instance
+        .collection('users')
+        .where('username', isEqualTo: username)
+        .get();
+    return result.docs.isEmpty;
+  }
+
   Future<String> signupUser({
     required String email,
     required String password,
@@ -16,6 +24,11 @@ class AuthMethod {
     String res = "Some error occured";
     try {
       if (email.isNotEmpty || password.isNotEmpty || username.isNotEmpty) {
+        bool isUsernameAvailable = await checkUsernameAvailability(username);
+        if (!isUsernameAvailable) {
+          res = "Username is already taken";
+          return res;
+        }
         UserCredential cred = await _auth.createUserWithEmailAndPassword(
             email: email, password: password);
 

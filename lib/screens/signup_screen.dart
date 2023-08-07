@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:recipe_box/resources/auth_method.dart';
 import 'package:recipe_box/screens/home.dart';
@@ -87,27 +88,17 @@ class _SignupScreenState extends State<SignupScreen> {
             ),
             const SizedBox(height: 24),
             // Login Button
-            InkWell(
-              onTap: signupUser,
-              child: Container(
-                // ignore: sort_child_properties_last
-                child: _isLoading
-                    ? const Center(
-                        child: CircularProgressIndicator(
-                        color: Color.fromARGB(255, 228, 228, 228),
-                      ))
-                    : const Text("Sign Up"),
-                width: double.infinity,
-                alignment: Alignment.center,
-                padding: const EdgeInsets.symmetric(vertical: 12),
-                decoration: ShapeDecoration(
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(8),
-                    ),
-                    color: Colors.blue),
-              ),
+            ElevatedButton(
+              onPressed: signupUser,
+              child: _isLoading
+                  ? const Center(
+                      child: CircularProgressIndicator(
+                      color: Color.fromARGB(255, 228, 228, 228),
+                    ))
+                  : const Text("Sign Up"),
             ),
             const SizedBox(height: 12),
+
             Flexible(
               flex: 2,
               child: Container(),
@@ -125,7 +116,7 @@ class _SignupScreenState extends State<SignupScreen> {
                   child: Container(
                     padding: const EdgeInsets.symmetric(vertical: 8),
                     child: const Text(
-                      'Sign Up',
+                      'Log in',
                       style: TextStyle(fontWeight: FontWeight.bold),
                     ),
                   ),

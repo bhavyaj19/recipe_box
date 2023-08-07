@@ -75,25 +75,14 @@ class _LoginScreenState extends State<LoginScreen> {
             ),
             const SizedBox(height: 24),
             // Login Button
-            InkWell(
-              onTap: loginUser,
-              child: Container(
-                // ignore: sort_child_properties_last
-                child: _isLoading
-                    ? const Center(
-                        child: CircularProgressIndicator(
-                        color: Color.fromARGB(255, 228, 228, 228),
-                      ))
-                    : const Text("Log In"),
-                width: double.infinity,
-                alignment: Alignment.center,
-                padding: const EdgeInsets.symmetric(vertical: 12),
-                decoration: ShapeDecoration(
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(8),
-                    ),
-                    color: Colors.blue),
-              ),
+            ElevatedButton(
+              onPressed: loginUser,
+              child: _isLoading
+                  ? const Center(
+                      child: CircularProgressIndicator(
+                      color: Color.fromARGB(255, 228, 228, 228),
+                    ))
+                  : const Text("Sign Up"),
             ),
             const SizedBox(height: 12),
             Flexible(

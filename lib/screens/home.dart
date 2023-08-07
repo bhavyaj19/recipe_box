@@ -3,6 +3,11 @@ import 'package:firebase_auth/firebase_auth.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
+
+  Future<void> _signOut() async {
+    await FirebaseAuth.instance.signOut();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -12,7 +17,12 @@ class HomeScreen extends StatelessWidget {
           width: 200,
           child: Column(
             children: [
-              Text(FirebaseAuth.instance.currentUser!.email.toString())
+              Text(FirebaseAuth.instance.currentUser!.email.toString()),
+              ElevatedButton(
+                onPressed: _signOut,
+                child: Text("Log out"),
+              ),
+              const SizedBox(height: 12),
             ],
           ),
         ),
