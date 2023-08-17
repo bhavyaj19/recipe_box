@@ -31,26 +31,32 @@ class AuthMethod {
         }
         UserCredential cred = await _auth.createUserWithEmailAndPassword(
             email: email, password: password);
+        try {
+          await cred.user!.sendEmailVerification();
+          print(cred.user!.uid);
+          print("adding user to firestore");
+          model.User user = model.User(
+              email: email,
+              uid: cred.user!.uid,
+              // photoUrl: photoUrl,
+              username: username,
+              followers: [],
+              following: []);
+          await _firestore
+              .collection('users')
+              .doc(cred.user!.uid)
+              .set(user.toJson());
+          return cred.user!.uid;
+        } catch (err) {
+          print("An error occured while trying to send email");
+          print(err);
+        }
 
-        print(cred.user!.uid);
-        // String photoUrl = await StorageMethod()
-        //     .uploadImageToStorage('profilePics', file, false);
-
-        model.User user = model.User(
-            email: email,
-            uid: cred.user!.uid,
-            // photoUrl: photoUrl,
-            username: username,
-            followers: [],
-            following: []);
-        await _firestore
-            .collection('users')
-            .doc(cred.user!.uid)
-            .set(user.toJson());
         res = "success";
       }
     } catch (err) {
       res = err.toString();
+      print("error occured to create user by bhavya");
     }
     return res;
   }
@@ -64,7 +70,11 @@ class AuthMethod {
       if (email.isNotEmpty || password.isNotEmpty) {
         await _auth.signInWithEmailAndPassword(
             email: email, password: password);
-        res = "success";
+        if (FirebaseAuth.instance.currentUser!.emailVerified) {
+          res = "success";
+        } else if (!(FirebaseAuth.instance.currentUser!.emailVerified)) {
+          res = "verify your email first";
+        }
       } else {
         res = "Enter all feilds";
       }
