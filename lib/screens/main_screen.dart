@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:recipe_box/utils/global_variables.dart';
-import 'package:flutter/gestures.dart';
 
 class TabScreen extends StatefulWidget {
   const TabScreen({super.key});
@@ -52,7 +51,7 @@ class _TabScreenState extends State<TabScreen> {
             _page = index;
             pageController.animateToPage(
               index,
-              duration: Duration(milliseconds: 500),
+              duration: const Duration(milliseconds: 500),
               curve: Curves.easeInOut,
             );
           });

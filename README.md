@@ -2,12 +2,16 @@
 
 This app is about storing and sharing recipes on an open social media platform.
 
+# Todo
+- [] Creating and Publishing posts
+- [] Post likes and Comments
+- [] User Profiles
 ## Dependencies
 - firebase_auth
 - cloud_firestore
 - firebase_core
 - firebase_storage
-
+- cupertino_icons
 This project is a starting point for a Flutter application.
 
 A few resources to get you started if this is your first Flutter project:
