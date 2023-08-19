@@ -36,7 +36,7 @@ class _LoginScreenState extends State<LoginScreen> {
     print(res);
     if (res != "success") {
       // ignore: use_build_context_synchronously
-      showSnackBar(res, context);
+      showSnackBar(context, res);
     } else {
       // ignore: use_build_context_synchronously
       Navigator.of(context)
