@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:recipe_box/screens/main_screen.dart';
@@ -10,6 +11,28 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  String username = "";
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    getUsername();
+  }
+
+  void getUsername() async {
+    DocumentSnapshot snap = await FirebaseFirestore.instance
+        .collection('users')
+        .doc(FirebaseAuth.instance.currentUser!.uid)
+        .get();
+
+    print(snap.data());
+    setState(() {
+      username = (snap.data() as Map<String, dynamic>)['username'];
+    });
+    print(username);
+  }
+
   void navigateToTab() {
     Navigator.of(context).pushReplacement(
         MaterialPageRoute(builder: (context) => const TabScreen()));
@@ -28,7 +51,7 @@ class _HomeScreenState extends State<HomeScreen> {
           width: 200,
           child: Column(
             children: [
-              Text(FirebaseAuth.instance.currentUser!.email.toString()),
+              Text('hello user: $username'),
               ElevatedButton(
                 onPressed: _signOut,
                 child: const Text("Log out"),
@@ -39,7 +62,7 @@ class _HomeScreenState extends State<HomeScreen> {
             ],
           ),
         ),
-      ),
+      ),  
     );
   }
 }

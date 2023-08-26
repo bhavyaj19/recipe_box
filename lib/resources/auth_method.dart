@@ -7,6 +7,16 @@ class AuthMethod {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
+  // get user details
+  Future<model.User> getUserDetails() async {
+    User currentUser = _auth.currentUser!;
+    DocumentSnapshot snap =
+        await _firestore.collection('users').doc(currentUser.uid).get();
+
+    return model.User.fromSnap(snap);
+  }
+
+  // checking username availability
   Future<bool> checkUsernameAvailability(String username) async {
     QuerySnapshot result = await FirebaseFirestore.instance
         .collection('users')
@@ -15,6 +25,7 @@ class AuthMethod {
     return result.docs.isEmpty;
   }
 
+  // signUp function
   Future<String> signupUser({
     required String email,
     required String password,
@@ -61,6 +72,7 @@ class AuthMethod {
     return res;
   }
 
+  // login functionality
   Future<String> loginUser({
     required String email,
     required String password,

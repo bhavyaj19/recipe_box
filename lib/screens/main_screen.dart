@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:recipe_box/providers/user_provider.dart';
 import 'package:recipe_box/utils/global_variables.dart';
 
 class TabScreen extends StatefulWidget {
@@ -17,6 +19,7 @@ class _TabScreenState extends State<TabScreen> {
     // TODO: implement initState
     super.initState();
     pageController = PageController();
+    addData();
   }
 
   @override
@@ -24,6 +27,11 @@ class _TabScreenState extends State<TabScreen> {
     // TODO: implement dispose
     super.dispose();
     pageController.dispose();
+  }
+
+  addData() async {
+    UserProvider _userProvider = Provider.of(context, listen: false);
+    await _userProvider.refreshUser(); 
   }
 
   void onPageChanged(int page) {
@@ -67,6 +75,11 @@ class _TabScreenState extends State<TabScreen> {
             icon: Icon(Icons.search_outlined),
             label: 'Search',
             selectedIcon: Icon(Icons.search_outlined),
+          ),
+          NavigationDestination(
+            icon: Icon(Icons.add_circle_outline_rounded),
+            label: 'Add Recipe',
+            selectedIcon: Icon(Icons.add_circle_rounded),
           ),
           NavigationDestination(
             icon: Icon(Icons.bookmarks_outlined),
