@@ -5,12 +5,14 @@ class TextFeildInput extends StatelessWidget {
   final bool isPass;
   final String hintText;
   final TextInputType textInputType;
+  final int maxLines;
   const TextFeildInput({
     super.key,
     required this.textEditingController,
     this.isPass = false,
     required this.hintText,
     required this.textInputType,
+    this.maxLines = 1,
   });
 
   @override
@@ -28,6 +30,7 @@ class TextFeildInput extends StatelessWidget {
           contentPadding: const EdgeInsets.all(8)),
       keyboardType: textInputType,
       obscureText: isPass,
+      maxLines: maxLines,
     );
   }
 }
