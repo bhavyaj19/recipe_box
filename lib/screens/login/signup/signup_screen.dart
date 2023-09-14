@@ -5,8 +5,9 @@ import 'dart:async';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:recipe_box/resources/auth_method.dart';
-import 'package:recipe_box/screens/home.dart';
 import 'package:recipe_box/screens/login/signup/login_screen.dart';
+import 'package:recipe_box/screens/login/signup/login_screen.dart';
+import 'package:recipe_box/screens/main_screen.dart';
 import 'package:recipe_box/widgets/text_feild_input.dart';
 
 class SignupScreen extends StatefulWidget {
@@ -51,7 +52,7 @@ class _SignupScreenState extends State<SignupScreen> {
         timer?.cancel(); // Stop the timer once email is verified
         Navigator.of(context).pushReplacement(
           MaterialPageRoute(
-            builder: (context) => const HomeScreen(),
+            builder: (context) => const TabScreen(),
           ),
         );
       } else {
@@ -82,7 +83,7 @@ class _SignupScreenState extends State<SignupScreen> {
       if (user != null && user.emailVerified) {
         timer?.cancel();
         Navigator.of(context).pushReplacement(
-          MaterialPageRoute(builder: (context) => const HomeScreen()),
+          MaterialPageRoute(builder: (context) => const TabScreen()),
         );
       } else {
         ScaffoldMessenger.of(context).showSnackBar(

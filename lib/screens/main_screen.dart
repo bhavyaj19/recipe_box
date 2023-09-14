@@ -31,7 +31,7 @@ class _TabScreenState extends State<TabScreen> {
 
   addData() async {
     UserProvider _userProvider = Provider.of(context, listen: false);
-    await _userProvider.refreshUser(); 
+    await _userProvider.refreshUser();
   }
 
   void onPageChanged(int page) {
@@ -50,6 +50,7 @@ class _TabScreenState extends State<TabScreen> {
       body: PageView(
         controller: pageController,
         onPageChanged: onPageChanged,
+        physics: const NeverScrollableScrollPhysics(), // Disable swiping
         children: homeScreenItems,
       ),
       bottomNavigationBar: NavigationBar(
@@ -57,11 +58,7 @@ class _TabScreenState extends State<TabScreen> {
         onDestinationSelected: (index) {
           setState(() {
             _page = index;
-            pageController.animateToPage(
-              index,
-              duration: const Duration(milliseconds: 500),
-              curve: Curves.easeInOut,
-            );
+            pageController.jumpToPage(index); // Change page on button/icon tap
           });
         },
         selectedIndex: _page,

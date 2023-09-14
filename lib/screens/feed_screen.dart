@@ -1,8 +1,8 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:recipe_box/models/user.dart' as model;
 import 'package:recipe_box/providers/user_provider.dart';
-import 'package:recipe_box/screens/new_post.dart';
 
 class FeedScreen extends StatefulWidget {
   const FeedScreen({super.key});
@@ -12,6 +12,10 @@ class FeedScreen extends StatefulWidget {
 }
 
 class _FeedScreenState extends State<FeedScreen> {
+  Future<void> _signOut() async {
+    await FirebaseAuth.instance.signOut();
+  }
+
   @override
   Widget build(BuildContext context) {
     model.User? user = Provider.of<UserProvider>(context).getUser;
@@ -23,17 +27,7 @@ class _FeedScreenState extends State<FeedScreen> {
           Center(
             child: Text(user!.username),
           ),
-          FloatingActionButton(
-            onPressed: () {
-              Navigator.of(context).pushReplacement(
-                MaterialPageRoute(builder: (context) => NewPost()),
-              );
-            },
-            child: const Icon(
-              Icons.add,
-              color: Colors.white,
-            ),
-          ),
+          ElevatedButton(onPressed: _signOut, child: const Text("LogOut"))
         ],
       ),
     );

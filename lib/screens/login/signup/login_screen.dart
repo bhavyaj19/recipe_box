@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:recipe_box/resources/auth_method.dart';
-import 'package:recipe_box/screens/home.dart';
 import 'package:recipe_box/screens/login/signup/signup_screen.dart';
+import 'package:recipe_box/screens/main_screen.dart';
 import 'package:recipe_box/utils/utils.dart';
 import 'package:recipe_box/widgets/text_feild_input.dart';
 
@@ -40,7 +40,7 @@ class _LoginScreenState extends State<LoginScreen> {
     } else {
       // ignore: use_build_context_synchronously
       Navigator.of(context)
-          .push(MaterialPageRoute(builder: (context) => const HomeScreen()));
+          .push(MaterialPageRoute(builder: (context) => const TabScreen()));
     }
   }
 
@@ -82,7 +82,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       child: CircularProgressIndicator(
                       color: Color.fromARGB(255, 228, 228, 228),
                     ))
-                  : const Text("Sign Up"),
+                  : const Text("Log In"),
             ),
             const SizedBox(height: 12),
             Flexible(
