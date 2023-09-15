@@ -17,20 +17,34 @@ class TextFeildInput extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final inputBorder =
-        OutlineInputBorder(borderSide: Divider.createBorderSide(context));
-    return TextField(
-      controller: textEditingController,
-      decoration: InputDecoration(
+    final ThemeData theme = Theme.of(context);
+    final inputBorder = OutlineInputBorder(
+      borderRadius: BorderRadius.circular(10.0),
+      borderSide: BorderSide(color: theme.colorScheme.onSurface.withOpacity(0.6)), // Use theme-aware color
+    );
+
+    return Container(
+      margin: const EdgeInsets.symmetric(vertical: 10.0),
+      child: TextField(
+        controller: textEditingController,
+        decoration: InputDecoration(
           hintText: hintText,
-          border: inputBorder,
-          focusedBorder: inputBorder,
-          enabledBorder: inputBorder,
           filled: true,
-          contentPadding: const EdgeInsets.all(8)),
-      keyboardType: textInputType,
-      obscureText: isPass,
-      maxLines: maxLines,
+          fillColor: theme.colorScheme.background, // Use theme-aware color
+          border: inputBorder,
+          focusedBorder: inputBorder.copyWith(
+            borderSide: BorderSide(color: theme.primaryColor), // Use theme-aware color
+          ),
+          enabledBorder: inputBorder,
+          contentPadding: const EdgeInsets.all(12.0),
+          prefixIcon: isPass
+              ? Icon(Icons.lock, color: theme.colorScheme.onSurface.withOpacity(0.6)) // Use theme-aware color
+              : null,
+        ),
+        keyboardType: textInputType,
+        obscureText: isPass,
+        maxLines: maxLines,
+      ),
     );
   }
 }
