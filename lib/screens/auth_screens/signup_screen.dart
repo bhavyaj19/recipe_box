@@ -5,7 +5,7 @@ import 'dart:async';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:recipe_box/resources/auth_method.dart';
-import 'package:recipe_box/screens/login/signup/login_screen.dart';
+import 'package:recipe_box/screens/auth_screens/login_screen.dart';
 import 'package:recipe_box/screens/main_screen.dart';
 import 'package:recipe_box/widgets/text_feild_input.dart';
 

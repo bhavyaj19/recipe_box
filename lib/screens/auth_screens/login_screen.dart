@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:recipe_box/resources/auth_method.dart';
-import 'package:recipe_box/screens/login/signup/signup_screen.dart';
+import 'package:recipe_box/screens/auth_screens/signup_screen.dart';
 import 'package:recipe_box/screens/main_screen.dart';
 import 'package:recipe_box/utils/utils.dart';
 import 'package:recipe_box/widgets/text_feild_input.dart';

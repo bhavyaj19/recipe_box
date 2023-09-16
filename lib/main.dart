@@ -4,7 +4,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:recipe_box/providers/user_provider.dart';
-import 'package:recipe_box/screens/login/signup/login_screen.dart';
+import 'package:recipe_box/screens/auth_screens/login_screen.dart';
 import 'package:recipe_box/screens/main_screen.dart';
 
 void main() async {

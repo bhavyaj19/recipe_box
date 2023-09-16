@@ -20,13 +20,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
   Widget build(BuildContext context) {
     model.User? user = Provider.of<UserProvider>(context).getUser;
 
-    // Make the following changes to the UI:
-
-    // 1. Use a `SingleChildScrollView` to wrap the `Column` widget so that the UI can scroll if it is too long.
-    // 2. Use a `SizedBox` widget to add some padding around the `CircleAvatar` widget.
-    // 3. Use a `Card` widget to wrap the `Column` widget so that it has a border and a shadow.
-    // 4. Use a `ListView` widget to display the username and email in a list, with each item in the list having its own `ListTile` widget.
-
     return Scaffold(
       appBar: AppBar(
         title: const Text('Profile Screen'),
