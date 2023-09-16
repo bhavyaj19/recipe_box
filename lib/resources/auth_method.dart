@@ -31,6 +31,7 @@ class AuthMethod {
     required String password,
     required String username,
     // required Uint8List file,
+    
   }) async {
     String res = "Some error occured";
     try {
@@ -96,3 +97,4 @@ class AuthMethod {
     return res;
   }
 }
+

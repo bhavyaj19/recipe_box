@@ -1,3 +1,5 @@
+import 'dart:typed_data';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -12,6 +14,8 @@ class ProfileScreen extends StatefulWidget {
 }
 
 class _ProfileScreenState extends State<ProfileScreen> {
+  Uint8List? _image;
+
   Future<void> _signOut() async {
     await FirebaseAuth.instance.signOut();
   }
@@ -64,17 +68,28 @@ class _ProfileScreenState extends State<ProfileScreen> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                SizedBox(
-                  height: 120,
-                  width: 120,
-                  child: CircleAvatar(
-                    backgroundColor: Color(0xFF4a4458), // Customize the avatar background color
-                    child: Icon(
-                      Icons.person_rounded,
-                      size: 80,
-                      color: Colors.white, // Customize the icon color
+                Stack(
+                  alignment: Alignment.bottomRight, // Align the icon to the bottom right corner
+                  children: [
+                    const SizedBox(
+                      height: 120,
+                      width: 120,
+                      child: CircleAvatar(
+                        backgroundColor: Color(0xFF4a4458),
+                        child: Icon(
+                          Icons.person_rounded,
+                          size: 80,
+                          color: Colors.white,
+                        ),
+                      ),
                     ),
-                  ),
+                    IconButton(
+                      icon: const Icon(Icons.camera_alt_rounded),
+                      onPressed: () {
+                        // Handle the profile image change here
+                      },
+                    ),
+                  ],
                 ),
                 const SizedBox(height: 20), // Add vertical spacing
                 ListView(
@@ -82,7 +97,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   children: [
                     ListTile(
                       title: Text(
-                        user!.username, // Replace with the user's name
+                        user!.username,
                         style: const TextStyle(
                           fontSize: 24,
                           fontWeight: FontWeight.bold,
@@ -91,7 +106,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     ),
                     ListTile(
                       title: Text(
-                        user!.email, // Replace with the user's email
+                        user.email,
                         style: const TextStyle(
                           fontSize: 16,
                           color: Colors.grey,
