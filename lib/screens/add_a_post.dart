@@ -31,7 +31,6 @@ class _AddPostScreenState extends State<AddPostScreen> {
     super.dispose();
     _titleController.dispose();
     _descriptionController.dispose();
-    
   }
 
   Future<void> postImage(String uid, String username) async {
@@ -44,6 +43,7 @@ class _AddPostScreenState extends State<AddPostScreen> {
         _titleController.text,
         _descriptionController.text,
         uid,
+        username,
         _file!,
       );
 
@@ -61,7 +61,7 @@ class _AddPostScreenState extends State<AddPostScreen> {
 
       // Navigate back to the starting screen of AddPostScreen.
       Navigator.of(context).pop(); // Close the dialog.
-      
+
       Navigator.of(context).pushReplacement(
         MaterialPageRoute(
           builder: (context) => const TabScreen(),

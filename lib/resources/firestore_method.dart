@@ -12,6 +12,7 @@ class FirestoreMethod {
     String title,
     String description,
     String uid,
+    String username,
     Uint8List file,
   ) async {
     String res = "Some error Occured";
@@ -27,6 +28,7 @@ class FirestoreMethod {
         postId: postId,
         photoUrl: photoUrl,
         datePublished: DateTime.now(),
+        username: username,
       );
 
       _firestore.collection('posts').doc(postId).set(post.toJson());

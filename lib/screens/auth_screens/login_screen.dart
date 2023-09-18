@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:flutter/material.dart';
 import 'package:recipe_box/resources/auth_method.dart';
 import 'package:recipe_box/screens/auth_screens/signup_screen.dart';
@@ -6,10 +8,10 @@ import 'package:recipe_box/utils/utils.dart';
 import 'package:recipe_box/widgets/text_feild_input.dart';
 
 class LoginScreen extends StatefulWidget {
-  const LoginScreen({super.key});
+  const LoginScreen({Key? key}) : super(key: key);
 
   @override
-  State<LoginScreen> createState() => _LoginScreenState();
+  _LoginScreenState createState() => _LoginScreenState();
 }
 
 class _LoginScreenState extends State<LoginScreen> {
@@ -19,7 +21,6 @@ class _LoginScreenState extends State<LoginScreen> {
 
   @override
   void dispose() {
-    // TODO: implement dispose
     super.dispose();
     _emailController.dispose();
     _passController.dispose();
@@ -35,10 +36,8 @@ class _LoginScreenState extends State<LoginScreen> {
     );
     print(res);
     if (res != "success") {
-      // ignore: use_build_context_synchronously
       showSnackBar(context, res);
     } else {
-      // ignore: use_build_context_synchronously
       Navigator.of(context)
           .push(MaterialPageRoute(builder: (context) => const TabScreen()));
     }
@@ -52,66 +51,73 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        centerTitle: true,
+        title: const Text(
+          "CookBook",
+          style: TextStyle(fontSize: 30, fontWeight: FontWeight.w600),
+        ),
+      ),
       body: SafeArea(
-          child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 32),
-        width: double.infinity,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            const SizedBox(height: 64),
-            // E-mail
-            TextFeildInput(
-                textEditingController: _emailController,
-                hintText: 'Enter your email',
-                textInputType: TextInputType.emailAddress),
-            const SizedBox(height: 24),
-            // Password
-            TextFeildInput(
-              textEditingController: _passController,
-              hintText: 'Enter your Password',
-              textInputType: TextInputType.text,
-              isPass: true,
-            ),
-            const SizedBox(height: 24),
-            // Login Button
-            ElevatedButton(
-              onPressed: loginUser,
-              child: _isLoading
-                  ? const Center(
-                      child: CircularProgressIndicator(
-                      color: Color.fromARGB(255, 228, 228, 228),
-                    ))
-                  : const Text("Log In"),
-            ),
-            const SizedBox(height: 12),
-            Flexible(
-              flex: 2,
-              child: Container(),
-            ),
-            Row(
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Container(
-                  padding: const EdgeInsets.symmetric(vertical: 8),
-                  child: const Text("don't have an account?"),
-                ),
-                const SizedBox(width: 10),
-                GestureDetector(
-                  onTap: navigateToSignup,
-                  child: Container(
-                    padding: const EdgeInsets.symmetric(vertical: 8),
-                    child: const Text(
-                      'Sign Up',
-                      style: TextStyle(fontWeight: FontWeight.bold),
-                    ),
+                const SizedBox(height: 32),
+                const Text(
+                  'Login',
+                  style: TextStyle(
+                    fontSize: 24,
+                    fontWeight: FontWeight.bold,
                   ),
-                )
+                ),
+                const SizedBox(height: 24),
+                TextFeildInput(
+                  textEditingController: _emailController,
+                  hintText: 'Enter your email',
+                  textInputType: TextInputType.emailAddress,
+                ),
+                const SizedBox(height: 16),
+                TextFeildInput(
+                  textEditingController: _passController,
+                  hintText: 'Enter your Password',
+                  textInputType: TextInputType.text,
+                  isPass: true,
+                ),
+                const SizedBox(height: 24),
+                ElevatedButton(
+                  onPressed: _isLoading ? null : loginUser,
+                  child: _isLoading
+                      ? const CircularProgressIndicator(
+                          color: Colors.white,
+                        )
+                      : const Text("Log In"),
+                ),
+                const SizedBox(height: 12),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    const Text("Don't have an account?"),
+                    const SizedBox(width: 10),
+                    GestureDetector(
+                      onTap: navigateToSignup,
+                      child: const Text(
+                        'Sign Up',
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
               ],
-            )
-          ],
+            ),
+          ),
         ),
-      )),
+      ),
     );
   }
 }

@@ -6,9 +6,11 @@ class Post {
   final String photoUrl;
   final String uid;
   final String postId;
+  final String username;
   final datePublished;
 
   const Post({
+    required this.username,
     required this.title,
     required this.description,
     required this.photoUrl,
@@ -24,6 +26,7 @@ class Post {
         "uid": uid,
         "postId": postId,
         "datePublished": datePublished,
+        "username": username,
       };
 
   static Post fromSnap(DocumentSnapshot snap) {
@@ -34,6 +37,7 @@ class Post {
         uid: snapshot['uid'],
         photoUrl: snapshot['photoUrl'],
         postId: snapshot['postId'],
-        datePublished: snapshot['datePublished']);
+        datePublished: snapshot['datePublished'],
+        username: snapshot['username']);
   }
 }
