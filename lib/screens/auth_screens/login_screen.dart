@@ -1,9 +1,11 @@
 // ignore_for_file: use_build_context_synchronously
 
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:recipe_box/resources/auth_method.dart';
 import 'package:recipe_box/screens/auth_screens/signup_screen.dart';
 import 'package:recipe_box/screens/main_screen.dart';
+import 'package:recipe_box/utils/colors.dart';
 import 'package:recipe_box/utils/utils.dart';
 import 'package:recipe_box/widgets/text_feild_input.dart';
 
@@ -53,9 +55,13 @@ class _LoginScreenState extends State<LoginScreen> {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: const Text(
+        title: Text(
           "CookBook",
-          style: TextStyle(fontSize: 30, fontWeight: FontWeight.w600),
+          style: GoogleFonts.styleScript(
+            fontWeight: FontWeight.bold,
+            fontSize: 40,
+            color: AppColors.textColor,
+          ),
         ),
       ),
       body: SafeArea(

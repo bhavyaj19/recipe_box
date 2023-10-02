@@ -7,6 +7,25 @@ class AuthMethod {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
+  //  updateUserUsername
+  Future<void> updateUserUsername(String newUsername) async {
+    try {
+      User? user = FirebaseAuth.instance.currentUser;
+      bool isUsernameAvailable = await checkUsernameAvailability(newUsername);
+      if (user != null && isUsernameAvailable) {
+        await FirebaseFirestore.instance
+            .collection('users')
+            .doc(user.uid)
+            .update({'username': newUsername});
+        print("success");
+      } else {
+        print("error in updating username");
+      }
+    } catch (e) {
+      print("error $e");
+    }
+  }
+
   // get user details
   Future<model.User> getUserDetails() async {
     User currentUser = _auth.currentUser!;
@@ -31,7 +50,6 @@ class AuthMethod {
     required String password,
     required String username,
     // required Uint8List file,
-    
   }) async {
     String res = "Some error occured";
     try {
@@ -97,4 +115,3 @@ class AuthMethod {
     return res;
   }
 }
-

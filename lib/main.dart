@@ -6,6 +6,7 @@ import 'package:provider/provider.dart';
 import 'package:recipe_box/providers/user_provider.dart';
 import 'package:recipe_box/screens/auth_screens/login_screen.dart';
 import 'package:recipe_box/screens/main_screen.dart';
+import 'package:recipe_box/utils/colors.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -36,7 +37,22 @@ class MyApp extends StatelessWidget {
       ],
       child: MaterialApp(
           debugShowCheckedModeBanner: false,
-          theme: ThemeData.dark(useMaterial3: true),
+          theme: ThemeData(
+            useMaterial3: true,
+            colorScheme: ColorScheme.fromSeed(
+              seedColor: AppColors.accentColor,
+            ),
+            textTheme: const TextTheme(
+              bodyMedium: TextStyle(
+                color: AppColors.textColor
+              )
+            ),
+            elevatedButtonTheme: ElevatedButtonThemeData(
+              style: ElevatedButton.styleFrom(
+                backgroundColor: AppColors.buttonColor,
+              )
+            )
+          ),
           home: StreamBuilder(
               stream: FirebaseAuth.instance.authStateChanges(),
               builder: (context, snapshot) {

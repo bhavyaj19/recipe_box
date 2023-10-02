@@ -16,7 +16,7 @@ class DetailedScreen extends StatelessWidget {
           },
         ),
         title: const Text(
-          "Blog Details",
+          "Detailed Recipe",
           style: TextStyle(fontWeight: FontWeight.bold),
         ),
       ),
@@ -27,7 +27,7 @@ class DetailedScreen extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               AspectRatio(
-                aspectRatio: 16 / 9,
+                aspectRatio: 1 / 1,
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(10),
                   child: Image.network(
@@ -37,22 +37,22 @@ class DetailedScreen extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 16),
-      
+
               // Title
-              const Padding(
-                padding: EdgeInsets.all(16.0),
+              Padding(
+                padding: const EdgeInsets.all(16.0),
                 child: Text(
-                  "Blog Title",
-                  style: TextStyle(
+                  snap['title'],
+                  style: const TextStyle(
                     fontSize: 24,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
               ),
-      
+
               // Username
               Padding(
-                padding: EdgeInsets.symmetric(horizontal: 16.0),
+                padding: const EdgeInsets.symmetric(horizontal: 16.0),
                 child: Text(
                   "By: ${snap['username']}",
                   style: const TextStyle(
@@ -61,15 +61,15 @@ class DetailedScreen extends StatelessWidget {
                   ),
                 ),
               ),
-      
+
               const SizedBox(height: 16), // Spacer
-      
+
               // Blog Body
-              const Padding(
-                padding: EdgeInsets.all(16.0),
+              Padding(
+                padding: const EdgeInsets.all(16.0),
                 child: Text(
-                  "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed et leo nec nisl facilisis volutpat.",
-                  style: TextStyle(fontSize: 18),
+                  snap['description'],
+                  style: const TextStyle(fontSize: 16),
                 ),
               ),
             ],

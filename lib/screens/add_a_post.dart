@@ -62,7 +62,7 @@ class _AddPostScreenState extends State<AddPostScreen> {
       // Navigate back to the starting screen of AddPostScreen.
       Navigator.of(context).pop(); // Close the dialog.
 
-      Navigator.of(context).pushReplacement(
+      Navigator.of(context).push(
         MaterialPageRoute(
           builder: (context) => const TabScreen(),
         ),
@@ -82,6 +82,8 @@ class _AddPostScreenState extends State<AddPostScreen> {
               title: const Text("Take a Photo"),
               onTap: () async {
                 Navigator.of(context).pop();
+                Navigator.of(context).push(
+                    MaterialPageRoute(builder: (context) => const TabScreen()));
                 Uint8List file = await pickImage(ImageSource.camera);
                 setState(() {
                   _file = file;
@@ -121,6 +123,8 @@ class _AddPostScreenState extends State<AddPostScreen> {
           icon: const Icon(Icons.arrow_back_ios_new_rounded),
           onPressed: () {
             Navigator.of(context).pop();
+            Navigator.of(context)
+                .push(MaterialPageRoute(builder: (context) => TabScreen()));
           },
         ),
         title: const Text("Create Post"),

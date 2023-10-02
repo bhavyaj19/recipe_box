@@ -1,10 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'package:recipe_box/models/user.dart' as model;
-import 'package:recipe_box/providers/user_provider.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:recipe_box/screens/detailed_post.dart';
+import 'package:recipe_box/utils/colors.dart';
 import 'package:recipe_box/widgets/post_card.dart';
 
 class FeedScreen extends StatefulWidget {
@@ -21,18 +20,20 @@ class _FeedScreenState extends State<FeedScreen> {
 
   @override
   Widget build(BuildContext context) {
-    model.User? user = Provider.of<UserProvider>(context).getUser;
-
     return Scaffold(
       appBar: AppBar(
         centerTitle: false,
-        title: const Text(
+        title: Text(
           "CookBook",
-          style: TextStyle(fontWeight: FontWeight.w500),
+          style: GoogleFonts.styleScript(
+            fontWeight: FontWeight.bold,
+            fontSize: 40,
+            color: AppColors.textColor,
+          ),
         ),
         actions: const [
           CircleAvatar(
-            backgroundColor: Color(0xFF4a4458),
+            backgroundColor: AppColors.accentColor,
             child: Icon(
               Icons.person_rounded,
               color: Colors.white,
@@ -44,7 +45,10 @@ class _FeedScreenState extends State<FeedScreen> {
         ],
       ),
       body: StreamBuilder(
-        stream: FirebaseFirestore.instance.collection('posts').snapshots(),
+        stream: FirebaseFirestore.instance
+            .collection('posts')
+            .orderBy('datePublished', descending: true)
+            .snapshots(),
         builder: (context,
             AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>> snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
@@ -71,11 +75,6 @@ class _FeedScreenState extends State<FeedScreen> {
           );
         },
       ),
-      //  const PostCard(
-      //   image:
-      //       // 'https://media.istockphoto.com/id/1180155588/vector/vector-design-template-for-business-team-work-abstract-icon.jpg?s=2048x2048&w=is&k=20&c=sseNt72GZDevGR51n1sESHMnnJ13nFvAGgKpunA_-I0=',
-      //       'https://images.pexels.com/photos/12601624/pexels-photo-12601624.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',
-      // ),
     );
   }
 }

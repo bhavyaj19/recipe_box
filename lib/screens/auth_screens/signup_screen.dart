@@ -4,9 +4,12 @@ import 'dart:async';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:recipe_box/resources/auth_method.dart';
 import 'package:recipe_box/screens/auth_screens/login_screen.dart';
 import 'package:recipe_box/screens/main_screen.dart';
+import 'package:recipe_box/utils/colors.dart';
+import 'package:recipe_box/utils/utils.dart';
 import 'package:recipe_box/widgets/text_feild_input.dart';
 
 class SignupScreen extends StatefulWidget {
@@ -70,9 +73,12 @@ class _SignupScreenState extends State<SignupScreen> {
       password: _passController.text,
       username: _usernameController.text,
     );
+    showSnackBar(
+        context, "An Email Verification Link was sent to your Email Id");
 
     setState(() {
-      _isLoading = false;
+      // idhar true aayega
+      _isLoading = true;
     });
 
     final user = FirebaseAuth.instance.currentUser;
@@ -85,12 +91,10 @@ class _SignupScreenState extends State<SignupScreen> {
           MaterialPageRoute(builder: (context) => const TabScreen()),
         );
       } else {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content:
-                Text("An Email Verification Link was sent to your Email Id"),
-          ),
-        );
+        // await Future.delayed(Duration(seconds: 3));
+        print("else trigger ho gaya");
+        showSnackBar(
+            context, "An Email Verification Link was sent to your Email Id");
       }
     }
   }
@@ -106,9 +110,13 @@ class _SignupScreenState extends State<SignupScreen> {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: const Text(
+        title: Text(
           "CookBook",
-          style: TextStyle(fontSize: 30, fontWeight: FontWeight.w600),
+          style: GoogleFonts.styleScript(
+            fontWeight: FontWeight.bold,
+            fontSize: 40,
+            color: AppColors.textColor,
+          ),
         ),
       ),
       body: SafeArea(
@@ -149,7 +157,7 @@ class _SignupScreenState extends State<SignupScreen> {
                 ),
                 const SizedBox(height: 24),
                 ElevatedButton(
-                  onPressed: _isLoading ? null : signupUser,
+                  onPressed: signupUser,
                   child: _isLoading
                       ? const CircularProgressIndicator(
                           color: Colors.white,

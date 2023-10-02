@@ -69,19 +69,9 @@ class _TabScreenState extends State<TabScreen> {
             selectedIcon: Icon(Icons.home_rounded),
           ),
           NavigationDestination(
-            icon: Icon(Icons.search_outlined),
-            label: 'Search',
-            selectedIcon: Icon(Icons.search_outlined),
-          ),
-          NavigationDestination(
             icon: Icon(Icons.add_circle_outline_rounded),
-            label: 'Add Recipe',
+            label: 'Add',
             selectedIcon: Icon(Icons.add_circle_rounded),
-          ),
-          NavigationDestination(
-            icon: Icon(Icons.bookmarks_outlined),
-            label: 'Saved',
-            selectedIcon: Icon(Icons.bookmarks_rounded),
           ),
           NavigationDestination(
             icon: Icon(Icons.account_circle_outlined),
