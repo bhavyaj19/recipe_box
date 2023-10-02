@@ -9,7 +9,8 @@ import 'package:uuid/uuid.dart';
 class FirestoreMethod {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
-  Future<void> updateUserUsername(String oldUsername, String newUsername) async {
+  Future<void> updateUserUsername(
+      String oldUsername, String newUsername) async {
     try {
       User? user = FirebaseAuth.instance.currentUser;
       // bool isUsernameAvailable = await checkUsernameAvailability(newUsername);
@@ -30,7 +31,23 @@ class FirestoreMethod {
     }
   }
 
-  // checking username availability
+  Future<void> deletePostByUsername(String username) async {
+    try {
+      List<String> postId = await getDocumentIdsByUsername(username);
+      for (var i in postId) {
+        try {
+          FirebaseFirestore.instance.collection('posts').doc(i).delete();
+          print("deleted posts");
+        } catch (e) {
+          print("error $e");
+        }
+      }
+    } catch (e) {
+      print("error : $e");
+    }
+  }
+
+  // getting doc id by username
   Future<List<String>> getDocumentIdsByUsername(String givenUsername) async {
     List<String> postId = [];
     try {

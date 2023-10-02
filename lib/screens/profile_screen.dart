@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:recipe_box/models/user.dart' as model;
 import 'package:recipe_box/providers/user_provider.dart';
 import 'package:recipe_box/resources/firestore_method.dart';
+import 'package:recipe_box/screens/auth_screens/login_screen.dart';
 import 'package:recipe_box/utils/colors.dart';
 import 'package:recipe_box/widgets/text_feild_input.dart';
 import 'package:recipe_box/resources/auth_method.dart';
@@ -17,10 +18,37 @@ class ProfileScreen extends StatefulWidget {
 
 class _ProfileScreenState extends State<ProfileScreen> {
   final TextEditingController _newUsernameController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
   bool isEditing = false;
 
   Future<void> _signOut() async {
     await FirebaseAuth.instance.signOut();
+    Navigator.of(context)
+        .push(MaterialPageRoute(builder: (context) => const LoginScreen()));
+  }
+
+  Future<void> deleteUserAccount(String username, String password) async {
+    try {
+      User? user = FirebaseAuth.instance.currentUser;
+      if (user != null) {
+        // Authenticate user
+        AuthCredential credential = EmailAuthProvider.credential(
+            email: user.email.toString(), password: password);
+
+        await user.reauthenticateWithCredential(credential);
+        // delete account
+        await user.delete();
+        print("deleted");
+        // delete posts
+        FirestoreMethod firestoreMethod = FirestoreMethod();
+        await firestoreMethod.deletePostByUsername(username);
+
+        Navigator.of(context).pushReplacement(
+            MaterialPageRoute(builder: (context) => const LoginScreen()));
+      }
+    } catch (e) {
+      print("error: $e");
+    }
   }
 
   Future<void> _updateUsername(UserProvider userProvider) async {
@@ -30,7 +58,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
       AuthMethod authMethod = AuthMethod();
       await authMethod.updateUserUsername(newUsername);
       FirestoreMethod firestoreMethod = FirestoreMethod();
-      await firestoreMethod.updateUserUsername(user!.username ,newUsername);
+      await firestoreMethod.updateUserUsername(user!.username, newUsername);
 
       // Refresh user data from Firestore and update the provider
       await userProvider.refreshUser();
@@ -72,7 +100,78 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 ),
                 PopupMenuItem<int>(
                   child: GestureDetector(
-                    onTap: () {},
+                    onTap: () {
+                      showDialog(
+                          context: context,
+                          builder: (BuildContext context) => AlertDialog(
+                                title: const Text("Delete Account?"),
+                                content:
+                                    const Text("You will loose all your data"),
+                                actions: [
+                                  ElevatedButton(
+                                    onPressed: () {
+                                      Navigator.of(context).pop();
+                                    },
+                                    child: const Text("Cancel"),
+                                  ),
+                                  ElevatedButton(
+                                    onPressed: () async {
+                                      Navigator.of(context).pop();
+                                      showDialog(
+                                          context: context,
+                                          builder: (context) => AlertDialog(
+                                                title: const Text("Password"),
+                                                actions: [
+                                                  TextFeildInput(
+                                                      textEditingController:
+                                                          _passwordController,
+                                                      hintText:
+                                                          "Enter Password",
+                                                      textInputType:
+                                                          TextInputType.text),
+                                                  ElevatedButton(
+                                                      onPressed: () {
+                                                        Navigator.of(context)
+                                                            .pop();
+                                                      },
+                                                      child:
+                                                          const Text("Cancel")),
+                                                  ElevatedButton(
+                                                    onPressed: () async {
+                                                      await deleteUserAccount(
+                                                          user!.username,
+                                                          _passwordController
+                                                              .text);
+                                                      Navigator.of(context)
+                                                          .pop();
+                                                    },
+                                                    style: ElevatedButton
+                                                        .styleFrom(
+                                                            backgroundColor:
+                                                                Colors
+                                                                    .red[200]),
+                                                    child: const Text(
+                                                      "Delete",
+                                                      style: TextStyle(
+                                                          color: Color.fromARGB(
+                                                              255, 170, 0, 0)),
+                                                    ),
+                                                  ),
+                                                ],
+                                              ));
+                                    },
+                                    style: ElevatedButton.styleFrom(
+                                        backgroundColor: Colors.red[200]),
+                                    child: const Text(
+                                      "Delete",
+                                      style: TextStyle(
+                                          color:
+                                              Color.fromARGB(255, 170, 0, 0)),
+                                    ),
+                                  ),
+                                ],
+                              ));
+                    },
                     child: const Row(
                       children: [
                         Icon(Icons.delete_forever_rounded),
