@@ -13,10 +13,10 @@ void main() async {
   if (kIsWeb) {
     await Firebase.initializeApp(
         options: const FirebaseOptions(
-      apiKey: "AIzaSyDfrQJmcShwZsAO7yGjRR9lvu6cPyPnpqc",
-      appId: "1:638163581320:android:fea8162b3e228cc828e23d",
-      messagingSenderId: "638163581320",
-      projectId: "recipebox-c1053",
+      apiKey: "" ,
+      appId: "",
+      messagingSenderId: "",
+      projectId: "",
     ));
   } else {
     await Firebase.initializeApp();
